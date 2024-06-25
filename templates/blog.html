@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nostrum reprehenderit assumenda et eum facere odio eveniet nisi laboriosam modi quidem iste, laudantium adipisci commodi accusamus minus molestiae deleniti. Totam.
+    <br><br><strong>Total likes: </strong>{{blogpost.total_likes}}
+
+    <br><br>
+    <strong>Comments</strong>
+    <form action="comment/{{blogpost.id}}" method="post">
+        {% csrf_token %}
+        <input type="text" name="comment" id="">
+        <button>Submit</button>
+    </form>
+    {% if flag == True %}
+        <button>Unlike</button>
+    {% else %}
+        <button>like</button>
+    {% endif %}
+
+
+</body>
+</html>

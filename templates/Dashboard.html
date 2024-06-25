@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  /* ===== Colors ===== */
+  --body-color: #eef2ff;
+  --sidebar-color: #fff;
+  --primary-color: #695cfe;
+  --primary-color-light: #f6f5ff;
+  --toggle-color: #ddd;
+  --text-color: #707070;
+
+  /* ====== Transition ====== */
+  --tran-03: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.3s ease;
+  --tran-05: all 0.3s ease;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--body-color);
+  transition: var(--tran-05);
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+body.dark {
+  --body-color: #18191a;
+  --sidebar-color: #242526;
+  --primary-color: #3a3b3c;
+  --primary-color-light: #3a3b3c;
+  --toggle-color: #fff;
+  --text-color: #ccc;
+}
+
+.container {
+  display: flex;
+}
+
+.menu__btn {
+  @media (max-width: 500px) {
+    > span {
+      &::before {
+        content: "";
+        top: 16px;
+      }
+      &::after {
+        content: "";
+        top: 8px;
+      }
+    }
+  }
+}
+
+#menu__toggle {
+  opacity: 0;
+}
+
+/* ===== Sidebar ===== */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  padding: 10px 14px;
+  background: var(--sidebar-color);
+  transition: var(--tran-05);
+  z-index: 100;
+
+  &.close {
+    width: 88px;
+  }
+
+  li {
+    height: 50px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  header .image {
+    min-width: 60px;
+    border-radius: 6px;
+  }
+
+  .icon {
+    min-width: 60px;
+    border-radius: 6px;
+    min-width: 60px;
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .text,
+  .icon {
+    color: var(--text-color);
+    transition: var(--tran-03);
+  }
+
+  .text {
+    font-size: 17px;
+    font-weight: 300;
+    white-space: nowrap;
+    opacity: 1;
+  }
+
+  &.close .text {
+    opacity: 0;
+  }
+
+  header {
+    position: relative;
+
+    .image-text {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+/* ===== Reusable code - Here ===== */
+
+/* =========================== */
+
+header .image-text {
+  .name {
+    margin-top: 2px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .profession {
+    font-size: 16px;
+    margin-top: -2px;
+    display: block;
+  }
+}
+
+.sidebar header {
+  .image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 40px;
+      border-radius: 6px;
+    }
+  }
+
+  .toggle {
+    position: absolute;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--tran-05);
+  }
+}
+
+body.dark .sidebar header .toggle {
+  color: var(--text-color);
+}
+
+.sidebar {
+  &.close .toggle {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  .menu {
+    margin-top: 15px;
+  }
+
+  li {
+    &.search-box {
+      border-radius: 6px;
+      background-color: var(--primary-color-light);
+      cursor: pointer;
+      transition: var(--tran-05);
+
+      input {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        border: none;
+        background-color: var(--primary-color-light);
+        color: var(--text-color);
+        border-radius: 6px;
+        font-size: 17px;
+        font-weight: 500;
+        transition: var(--tran-05);
+      }
+    }
+
+    a {
+      list-style: none;
+      height: 100%;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: var(--tran-03);
+
+      &:hover {
+        background-color: var(--primary-color);
+
+        .icon,
+        .text {
+          color: var(--sidebar-color);
+        }
+      }
+    }
+  }
+}
+
+body.dark .sidebar li a:hover {
+  .icon,
+  .text {
+    color: var(--text-color);
+  }
+}
+
+.sidebar .menu-bar {
+  height: calc(100% - 55px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+
+.menu-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar .menu-bar .mode {
+  border-radius: 6px;
+  background-color: var(--primary-color-light);
+  position: relative;
+  transition: var(--tran-05);
+}
+
+.menu-bar .mode .sun-moon {
+  height: 50px;
+  width: 60px;
+}
+
+.mode .sun-moon i {
+  position: absolute;
+
+  &.sun {
+    opacity: 0;
+  }
+}
+
+body.dark .mode .sun-moon i {
+  &.sun {
+    opacity: 1;
+  }
+
+  &.moon {
+    opacity: 0;
+  }
+}
+
+.menu-bar .bottom-content .toggle-switch {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.toggle-switch .switch {
+  position: relative;
+  height: 22px;
+  width: 40px;
+  border-radius: 25px;
+  background-color: var(--toggle-color);
+  transition: var(--tran-05);
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  background-color: var(--sidebar-color);
+  transition: var(--tran-04);
+}
+
+body.dark .switch::before {
+  left: 20px;
+}
+
+.home {
+  @media (min-width: 501px) {
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+  }
+
+  .text {
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--text-color);
+    padding: 12px 60px;
+  }
+}
+
+@media (min-width: 501px) {
+  .sidebar.close ~ .home {
+    left: 78px;
+    height: 100vh;
+    width: calc(100% - 78px);
+  }
+}
+
+body.dark .home .text {
+  color: var(--text-color);
+}
+
+@media (max-width: 500px) {
+  .container {
+    flex-direction: column;
+    .home {
+      position: relative;
+    }
+    .sidebar {
+      padding: 0;
+      height: 0;
+      width: 100%;
+      overflow: hidden;
+      position: fixed;
+      i.toggle {
+        display: none;
+      }
+    }
+  }
+  #menu__toggle {
+    &:checked {
+      + {
+        .menu__btn {
+          > span {
+            transform: rotate(45deg);
+            background-color: var(--primary-color);
+            &::before {
+              top: 0;
+              transform: rotate(0deg);
+              background-color: var(--primary-color);
+            }
+            &::after {
+              top: 0;
+              transform: rotate(90deg);
+              background-color: var(--primary-color);
+            }
+          }
+        }
+      }
+      ~ {
+        .sidebar {
+          padding: 40px 24px 10px;
+          height: 100%;
+          overflow: inherit;
+        }
+      }
+    }
+  }
+  .menu__btn {
+    position: relative;
+    top: 8px;
+    left: 20px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    z-index: 101;
+    > span {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition-duration: 0.25s;
+      &::before {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: var(--primary-color);
+        transition-duration: 0.25s;
+      }
+      &::after {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: var(--primary-color);
+        transition-duration: 0.25s;
+      }
+    }
+  }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    max-width: 1000px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+button {
+    background-color: #068ad6;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+@media (max-width: 768px) {
+    .form-group input, .form-group textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.dashboard-components {
+    margin-bottom: 20px;
+    padding-left: 20px;  /* Add padding to the left */
+    padding-right: 20px; /* Add padding to the right */
+}
+
+.dashboard-components h2 {
+    margin-top: 0;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.card {
+    flex: 1 1 calc(30% - 20px); /* Adjust width to be narrower */
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 16px;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex: 1 1 calc(45% - 20px); /* Adjust width for medium screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        flex: 1 1 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input id="menu__toggle" type="checkbox" />
+        <label class="menu__btn" for="menu__toggle">
+          <span></span>
+        </label>
+        <nav class="sidebar">
+          <header>
+            <div class="image-text">
+              <span class="image">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgjA6FdqLFps5zaTKQjQJaEThc8nqqk-qq8BTrxjoc1a2DWIJ2wb-eTf1R4hYRwC4UDqdR2kOish2vKcemBjYQEh0waLfZ4wcteJvy0TISrdbPWZm8udx730Ow7nj-oU_-7ZJGQSWWU8iAa_FG3BZ02BK1gpXYzmxj-s42fk4D0WrooBR6bypV9ImrSOg=s800" alt="">
+              </span>
+      
+              <div class="text logo-text">
+                <span class="name">Codinglab</span>
+                <span class="profession">Web developer</span>
+              </div>
+            </div>
+      
+            <i class='bx bx-chevron-right toggle'></i>
+          </header>
+      
+          <div class="menu-bar">
+            <div class="menu">
+      
+              <li class="search-box">
+                <i class='bx bx-search icon'></i>
+                <input type="text" placeholder="Search...">
+              </li>
+      
+              <ul class="menu-links">
+                <li class="nav-link">
+                  <a href="#">
+                    <i class='bx bx-home-alt icon'></i>
+                    <span class="text nav-text">Dashboard</span>
+                  </a>
+                </li>
+      
+                <li class="nav-link">
+                  <a href="#">
+                    <i class='bx bx-bar-chart-alt-2 icon'></i>
+                    <span class="text nav-text">Revenue</span>
+                  </a>
+                </li>
+      
+                <li class="nav-link">
+                  <a href="#">
+                    <i class='bx bx-bell icon'></i>
+                    <span class="text nav-text">Notifications</span>
+                  </a>
+                </li>
+      
+                <li class="nav-link">
+                  <a href="#">
+                    <i class='bx bx-pie-chart-alt icon'></i>
+                    <span class="text nav-text">Analytics</span>
+                  </a>
+                </li>
+      
+                <li class="nav-link">
+                  <a href="#">
+                    <i class='bx bx-wallet icon'></i>
+                    <span class="text nav-text">Wallets</span>
+                  </a>
+                </li>
+      
+              </ul>
+            </div>
+      
+            <div class="bottom-content">
+              <li class="">
+                <a href="#">
+                  <i class='bx bx-log-out icon'></i>
+                  <span class="text nav-text">Logout</span>
+                </a>
+              </li>
+      
+              <li class="mode">
+                <div class="sun-moon">
+                  <i class='bx bx-moon icon moon'></i>
+                  <i class='bx bx-sun icon sun'></i>
+                </div>
+                <span class="mode-text text">Dark mode</span>
+      
+                <div class="toggle-switch">
+                  <span class="switch"></span>
+                </div>
+              </li>
+      
+            </div>
+          </div>
+      
+        </nav>
+      
+        <section class="home">
+          <div class="text">Dashboard Sidebar</div>
+          <form method="post" action="/blog-content-save">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" rows="10" required></textarea>
+            </div>
+            <button type="submit">Publish</button>
+        </form>
+        
+
+        <section class="dashboard-components">
+    &nbsp;
+            <div class="cards">
+                <div class="card">
+                    <h3>Total Posts</h3>
+                    <p>120</p>
+                </div>
+                <div class="card">
+                    <h3>Total Comments</h3>
+                    <p>345</p>
+                </div>
+                <div class="card">
+                    <h3>Total Views</h3>
+                    <p>7890</p>
+                </div>
+            </div>
+        </section>
+        
+        </section>  
+      </div>
+      <script>
+        const body = document.querySelector("body"),
+  sidebar = body.querySelector("nav"),
+  toggle = body.querySelector(".toggle"),
+  searchBtn = body.querySelector(".search-box"),
+  modeSwitch = body.querySelector(".toggle-switch"),
+  modeText = body.querySelector(".mode-text");
+
+toggle.addEventListener("click", () => {
+  sidebar.classList.toggle("close");
+});
+
+searchBtn.addEventListener("click", () => {
+  sidebar.classList.remove("close");
+});
+
+modeSwitch.addEventListener("click", () => {
+  body.classList.toggle("dark");
+
+  if (body.classList.contains("dark")) {
+    modeText.innerText = "Light mode";
+  } else {
+    modeText.innerText = "Dark mode";
+  }
+});
+
+
+
+      </script>
+</body>
+</html>

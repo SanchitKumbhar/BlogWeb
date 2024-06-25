@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Verdana";
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: "Segoe UI";
+            font-weight: 400;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .container {
+            background-color: #f1f1f1;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .column-25 {
+            float: left;
+            width: 25%;
+            margin-top: 12px;
+        }
+
+        .column-75 {
+            float: left;
+            width: 75%;
+            margin-top: 12px;
+        }
+
+   
+
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        label {
+            display: inline-block;
+            padding: 16px 16px 16px 0;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            font-size: 17px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            resize: vertical;
+        }
+
+        input[type="email"],
+        select,
+        textarea {
+            font-size: 17px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #555;
+            color: #fff;
+            font-size: 17px;
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            float: right;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .column-25,
+            .column-75,
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form method="post" action="/personal-details-registered">
+            {% csrf_token %}
+            <h1>Personal Details</h1>
+            <div class="row">
+                <div class="column-25">
+                    <label for="Name">Name</label>
+                </div>
+                <div class="column-75">
+                    <input type="text" name="name" placeholder="Your name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="column-25">
+                    <label for="country">College</label>
+                </div>
+                <div class="column-75">
+                    <select name="college">
+                        <!-- <option value="Country" selected></option> -->
+                        <option value="Trinity Academy of engineering">Trinity Academy of engineering</option>
+                        <option value="Trinity College of Engineering and Reaserch">Trinity College of Engineering and Reaserch</option>
+                        <option value="KJ College Engineering and Reaserch">KJ College Engineering and Reaserch</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column-25">
+                    <label for="subject">Phone Number</label>
+                </div>
+                <div class="column-75">
+                    <input type="text" name="phonenumber" placeholder="Your PhoneNumber">
+                </div>
+
+                
+            </div>
+            <div class="row">
+                
+                <div class="column-25">
+                    <label for="subject">Email</label>
+                </div>
+                <div class="column-75">
+                    <input type="email" name="email" placeholder="Your Email">
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
