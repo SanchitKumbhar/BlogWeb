@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>blogs</title>
     <link rel="stylesheet" href="/static/assets/css/kritika css/index.css" type="text/css">
+    <link rel="stylesheet" href="/static/assets/css/kritika css/responsive.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -18,9 +19,10 @@
 
 
 
-        <ul class="nav-list another">
-
-            <li><a href="index.html" class="mid ">EpicPost</a></li>
+        <a href="index.html" class="mid ">EpicPost</a>
+        <ul class="nav-list1 ">
+            <!-- 
+            <li><a href="index.html" class="mid ">EpicPost</a></li> -->
             <li><a href="index.html">Home</a></li>
             <li><a href="index.html">Notification</a></li>
             <li><a href="blogs.html">Blogs</a></li>
@@ -28,14 +30,42 @@
         </ul>
 
         <!-- <div class="rightnav right"> -->
-            <!-- <button class="sign-in-button hw">Sign In</button> -->
-            <div class="searchbox">
-                <input type="text" class="text-box hw" placeholder="Search Blogs">
-                <button class="search-button hw"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-            <div class="nav-bar-pfp " name="pfp-of-user"></div>
+        <!-- <button class="sign-in-button hw">Sign In</button> -->
+        <div class="searchbox">
+            <input type="text" class="text-box hw" placeholder="Search Blogs">
+            <button class="search-button hw"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+      <a href="userprofile.html">  <div class="nav-bar-pfp " name="pfp-of-user"></div> </a>
         <!-- </div> -->
     </nav>
+
+    <div class="off-screen-menu">
+        <!-- <ul class="nav-list2"> -->
+        <ul>
+            <li><a href="index.html" class="burger-contents "><i class="fa-solid fa-house"></i></a></li>
+            <li><a href="index.html" class="burger-contents "><i class="fa-solid fa-bell"></i></a></li>
+            <li><a href="blogs.html" class="burger-contents "><i class="fa-solid fa-blog"></i></a></li>
+
+        </ul>
+    </div>
+    <nav class="navbar-2">
+
+        <div class="burger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+
+        </div>
+
+
+        <button class="search-btn-nav2"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+        <div class="website-name"><a href="index.html" class="mid">EpicPost</a></div>
+        <a href="index.html" class="noti-nav2"><i class="fa-regular fa-bell"></i></a>
+        <div class="nav-bar-pfp-nav2" name="pfp-of-user"></div>
+    </nav>
+
+
 
     <!-- blog post -->
 
@@ -88,49 +118,47 @@
                 Blanditiis
             </div>
             <div class="btn-and-viewcount">
-            <a class="view-blog-count" href="viewblog.html" ><button class="view-blog-btn">View Blog</button> </a>  
-            <p class="view-count">0</p>
-            <p style="margin-left:10px ;">views</p>
-        </div>
+                <a class="view-blog-count" href="viewblog.html"><button class="view-blog-btn">View Blog</button> </a>
+                <p class="view-count">0</p>
+                <p style="margin-left:10px ;">views</p>
+            </div>
         </div>
     </div>
-<!-- 
+    <!-- 
     href="viewblog.html"  -->
 
     <!-- footer section -->
 
-    <div id="footer">
-        <div class="footer1-3">
-            <div id="footer-part1">
-                <div class="head-footer-part12">Resources</div>
-                <div class="content-footer-part12">
-                    <p> <a>support</a></p>
-                    <p> <a> securites </a></p>
-                    <p> <a> help center </a></p>
-                    <p> <a> privacy policy </a></p>
-                    <p> <a> term's & conditions </a></p>
-                </div>
-            </div>
+    <footer id="footer">
 
-            <div id="footer-part2">
-                <div class="head-footer-part12">Company</div>
-                <div class="content-footer-part12">
-                    <p> <a> Our story</a></p>
-                    <p> <a> Blogs </a></p>
-                    <p> <a> about us</a></p>
-                    <p> <a> Contact us</a></p>
-                    <p> <a> Community </a></p>
-                </div>
+        <div id=" content-layout">
+            <div class="head-footer-part12">Resources</div>
+            <div class="content-footer-part12">
+                <p> <a>support</a></p>
+                <p> <a> securites </a></p>
+                <p> <a> help center </a></p>
+                <p> <a> privacy policy </a></p>
+                <p> <a> term's & conditions </a></p>
             </div>
-
-            <div class="footer-para">
-                <p class="footer-para-head"> EpicPost</p>
-                <p class="footer-para-subhead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum
-                    accusantium consequuntur explicabo illumiy.</p>
-            </div>
-
         </div>
-        <div id="footer-part3">
+
+        <div id=" content-layout">
+            <div class="head-footer-part12">Company</div>
+            <div class="content-footer-part12">
+                <p> <a> Our story</a></p>
+                <p> <a> Blogs </a></p>
+                <p> <a> about us</a></p>
+                <p> <a> Contact us</a></p>
+                <p> <a> Community </a></p>
+            </div>
+        </div>
+
+        <div class="footer-para">
+            <p class="footer-para-head"> EpicPost</p>
+            <p class="footer-para-subhead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum
+                accusantium consequuntur explicabo illumiy.</p>
+        </div>
+        <div id=" content-layout">
             <p class="head-footer-part3">Let's stay connect</p>
             <p class="subhead-footer-part3">Enter your Email for weekly newsletters</p>
             <div class="email-add-section">
@@ -144,12 +172,31 @@
                 <div class="icon"> <i class="fa-brands fa-github"></i></div>
                 <div class="icon"> <i class="fa-brands fa-x-twitter"></i></div>
             </div>
+
         </div>
-    </div>
+
+
+    </footer>
+    <!-- <div id="footer-part3">
+            <p class="head-footer-part3">Let's stay connect</p>
+            <p class="subhead-footer-part3">Enter your Email for weekly newsletters</p>
+            <div class="email-add-section">
+                <input class="emailadd-footer-part3" placeholder="Enter your email">
+                <button class="submit-btn">Submit</button>
+            </div>
+            <p class="head-footer-part3">Follow us</p>
+            <div class="social-icons">
+                <div class="icon"> <i class="fa-brands fa-square-instagram"></i></div>
+                <div class="icon"> <i class="fa-brands fa-facebook"></i> </div>
+                <div class="icon"> <i class="fa-brands fa-github"></i></div>
+                <div class="icon"> <i class="fa-brands fa-x-twitter"></i></div>
+            </div>
+        </div> -->
+    <!-- </footer> -->
 
 
 
-<script src="/static/assets/js/kritika js/index.js"></script>
+    <script src="/static/assets/js/kritika js/index.js"></script>
 </body>
 
 </html>

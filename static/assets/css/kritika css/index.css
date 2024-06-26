@@ -5,13 +5,17 @@
     font-family: system-ui;
 }
 
+body{
+    background-color: black;
+}
+
 
 /* nav bar */
 
 .navbar {
     display: flex;
     height: 70px;
-    background-color: #28313a;
+    background-color: #1c1c1c;
     align-items: center;
     position: sticky;
     top: 0;
@@ -30,11 +34,21 @@
 
 .navbar li a {
     text-decoration: none;
-    color: rgb(1, 1, 1);
+    /* color: rgb(1, 1, 1); */
     font-size: 1.06rem;
     /* font-weight: 600; */
-    border: 2px solid transparent;
+    /* border: 2px solid transparent; */
     color: white;
+}
+
+.mid {
+    text-decoration: none;
+    /* color: rgb(1, 1, 1); */
+    font-size: 1.06rem;
+    font-weight: 900;
+    /* border: 2px solid transparent; */
+    color: white;
+    margin-left: 25px;
 }
 
 .navbar li a:hover {
@@ -46,9 +60,29 @@
 
 
 
-.nav-list {
+
+/* .another{
+    margin-left: 25px;
+    margin-top: 10px;
     width: 65%;
+} */
+
+.nav-list1 {
+    margin-left: 25px;
+    margin-top: 10px;
+    width: 65%;
+    display: flex;
 }
+
+.another.li {
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
 
 .rightnav {
     margin: 0;
@@ -77,7 +111,7 @@
 
 
 .hw {
-  
+
     font-family: system-ui;
     border: none;
     /* border-radius: 65px; */
@@ -120,7 +154,7 @@
     width: 70px; */
     border-radius: 50%;
     background-size: cover;
-    margin-left: auto;
+    margin-left: 15px;
     margin-right: 45px;
 }
 
@@ -149,34 +183,36 @@
     border-radius: 50px;
 } */
 
+
+/* blog */
+
 .user-id {
     display: flex;
     align-items: end;
-    /* margin-bottom: 45px; */
-    /* margin-top: 35px; */
-    /* margin-left: 35px;
-    padding-top: 35px; */
+
 
 }
 
 
 .layout {
-    /* margin-bottom: 45px; */
-    /* margin-top: 35px; */
+
     margin-left: 35px;
     padding-top: 35px;
     color: azure;
 }
 
 .box {
-    /* height: 700px; */
-    margin: 30px;
-    /* background-color: #60707f; */
-    background-color: #1F2D3B;
-    /* margin-top: 90px; */
-    margin-left: 45px;
-    margin-right: 45px;
+
+    margin: auto;
+
+    background-color: #0a0a0a;
+    margin-top: 10px;
+
+    margin-right: 20px;
     border-radius: 20px;
+    width: auto;
+    margin-left: 20px;
+    border: 1px solid grey;
 }
 
 .pfp-of-user {
@@ -190,7 +226,7 @@
 
 .user-name {
     font-size: 30px;
-    color: black;
+    color: white;
     margin-left: 10px;
 }
 
@@ -201,8 +237,7 @@
     background-repeat: no-repeat;
     margin-bottom: 45px;
     height: 350px;
-    /* justify-self: flex-end; */
-    /* justify-items: center; */
+
     justify-content: flex-start;
     background-position-x: center;
 }
@@ -210,7 +245,7 @@
 .description {
     padding-bottom: 35px;
     padding-right: 35px;
-    /* text-align: center; */
+
     font-size: 20px;
     margin-left: 25px;
 }
@@ -224,14 +259,12 @@
     width: 400px;
     height: 30px;
     color: azure;
-    background-color: #38495a;
+    background-color: #33373a;
     cursor: pointer;
-    /* margin: auto; */
+
     align-items: center;
     justify-content: center;
-    /* justify-items: center; */
-    /* background-position-x: center; */
-    /* width: 30%; */
+
     margin-left: 25px;
     margin-bottom: 35px;
     border-radius: 10px;
@@ -247,7 +280,7 @@
 .interactions {
     display: flex;
     font-size: 35px;
-    /* color: azure; */
+
     padding-bottom: 35px;
     margin-right: 25px;
 }
@@ -255,7 +288,7 @@
 i.fa-solid.fa-user-plus {
     margin-left: 25px;
     align-items: center;
-    /* background-position-y: center; */
+
     font-size: 25px;
 }
 
@@ -264,16 +297,140 @@ i.fa-solid.fa-user-plus {
 }
 
 
+/* 
+navbar 2 */
+
+/* .navbar-2{
+    display: none;
+    height: 50px;
+    width: auto;
+    background: #28313a ;
+    color: aliceblue;
+} */
+
+.navbar-2 {
+    display: none;
+    height: 70px;
+    width: auto;
+    /* background: #28313a; */
+    background-color: #1c1c1c;
+    color: aliceblue;
+    align-items: center;
+}
+
+.nav-bar-pfp-nav2 {
+    height: 30px;
+    width: 30px;
+    background-image: url('/static/assets/images/kritika/pfp.png.png');
+    /* height: 70px;
+    width: 70px; */
+    border-radius: 50%;
+    background-size: cover;
+    /* margin-left: 15px; */
+    margin-right: 25px;
+}
+
+.noti-nav2 {
+    text-decoration: none;
+    /* color: rgb(1, 1, 1); */
+    font-size: 1.06rem;
+    /* font-weight: 600; */
+    /* border: 2px solid transparent; */
+    color: white;
+    margin-right: 20px;
+
+}
+
+button.search-btn-nav2 {
+    background: none;
+    border: none;
+    color: aliceblue;
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+
+.website-name {
+    /* width: 0%; */
+    margin: auto;
+    /* vertical-align: middle; */
+    /* object-position: center; */
+    /* margin-right: 90px; */
+    text-align: center;
+}
+
+.burger {
+    position: absolute;
+    display: none;
+    /* margin-top: 65px; */
+    position: relative;
+
+}
+
+.line {
+    height: 2px;
+    width: 15px;
+    margin: 2px;
+    margin-left: 25px;
+    background-color: white;
+}
+
+.off-screen-menu {
+    background-color: black;
+    height: 100vh;
+    width: 100%;
+    max-width: 60px;
+    position: fixed;
+    /* top: 0; */
+    left: -400px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    font-size: 1.06rem;
+    transition: .3s ease;
+    color: aliceblue;
+}
+
+.off-screen-menu.active {
+    left: 0;
+}
+
+.burger-contents {
+    text-decoration: none;
+    color: white;
+}
+
+li {
+    margin-top: 10px;
+}
+
+ul {
+    list-style: none;
+    margin-top: 70px;
+    margin-left: 25px;
+}
+
+
+
 /* footer section */
 
 #footer {
     margin-top: 70px;
-    height: 300px;
-    background-color: #28313a;
+    /* height: 300px; */
+    background-color: #1c1c1c;
     /* display: flex; */
     color: white;
+    display: flex;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    align-items: center;
 }
+
+
+div#\ content-layout {
+    margin: 39px;
+}
+
 
 .footer1-3 {
     float: left;
@@ -387,4 +544,8 @@ i.fa-solid.fa-user-plus {
 .icon {
     margin-right: 10px;
     font-size: 25px;
+}
+
+div#\ content-layout {
+    margin: 39px;
 }
