@@ -1,0 +1,53 @@
+
+
+
+@media only screen and (max-width:780px),(max-height:640px){
+    .burger{
+        display: block;
+    
+    }
+
+    .navbar {
+        display: none;}
+
+    /* .navbar-2
+{
+    display: flex;
+    height: 50px;
+    width: auto;
+    background-color: #28313a ;
+    color: aliceblue;
+} */
+
+.navbar-2{
+    display: flex;
+    /* width: 104%; */
+}
+
+.another{
+    opacity: 0;
+}
+
+/* .nav-list{
+    display: block;
+} */
+}
+
+@media screen and (max-width:324px){
+    .navbar-2{
+       width:115%;
+    }
+}
+
+/* @media screen and (max-width:261px),(max-width:648px){
+    .navbar-2{
+       width:115%;
+    }
+} */
+
+
+
+
+
+
+
