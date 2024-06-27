@@ -17,11 +17,13 @@
         <button>Submit</button>
     </form>
     {% if flag == True %}
-        <button>Unlike</button>
+    <a href="dislike/{{blogpost.id}}"><button>Unlike</button></a>
     {% else %}
-        <button>like</button>
+    <a href="like/{{blogpost.id}}"><button>Like</button></a>
     {% endif %}
-
+    <a href="/view-profile/{{blogpost.user}}">
+        <button>Follow</button>
+    </a>
 
 </body>
 </html>

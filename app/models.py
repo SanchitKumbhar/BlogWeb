@@ -46,6 +46,11 @@ class Search(models.Model):
     search=models.CharField(max_length=150)
     user=models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
 
+class followers(models.Model):
+    followers_ip=models.CharField(max_length=128)
+    user_follows=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_follows")
+    followed_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="followed_user")
+
 
 
 
