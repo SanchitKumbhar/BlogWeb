@@ -136,6 +136,10 @@ h1 {
     margin-top: 10px;
 }
 
+.likebtn:active{
+color: red;
+}
+
 i.fa-solid.fa-user-plus {
     /* margin-left: 25px; */
     align-items: center;
