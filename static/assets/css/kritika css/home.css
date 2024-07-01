@@ -1,0 +1,25 @@
+body{
+    background-color: black;
+}
+
+.bg-dark {
+    --bs-bg-opacity: 1;
+    background-color: rgb(16 16 16) !important;
+}
+
+.autocomplete-input {
+    background-color: #2b2b2b;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Im0yMSAyMS00LTQiLz48L3N2Zz4=);
+    background-position: 12px;
+    background-repeat: no-repeat;
+    border: 1px solid #1c1b1b;
+    border-radius: 8px;
+    box-sizing: border-box;
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 12px 12px 12px 48px;
+    position: relative;
+    width: 20%;
+    height: 30px;
+}
