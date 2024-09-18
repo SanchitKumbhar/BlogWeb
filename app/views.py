@@ -1,41 +1,51 @@
+import json
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, get_object_or_404
+
 # Create your views here.
+from urllib.parse import urlparse
 from faker import Faker
 
 
 def index(request):
+    # Dummy Data
+    '''
     fake = Faker()
-    # def get_client_ip():
-    #     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    #     if x_forwarded_for:
-    #         ip = x_forwarded_for.split(',')[0]
-    #     else:
-    #         ip = request.META.get('REMOTE_ADDR')
-    #     return ip
-    # ipno=get_client_ip()
-    # for j in range(30):
-    #     User.objects.create_user(username=fake.user_name(), password=fake.password())
-    # users=User.objects.all()
-    # user_list=[]
-    # for i in users:
-    #     user = User.objects.get(username=i.username)
-    #     user_list.append(user)
-    # for i in range(0,30):
-    #     userdetails.objects.create(
-    #         name=fake.name(),
-    #         phonenumber=fake.phone_number(),
-    #         college=fake.name(),
-    #         email=fake.email(),
-    #         hobbies=fake.name(),
-    #         user=user_list[i]
-    #     )
-    views = Blog.objects.filter(user=request.user)
-
-    return render(request, "home.html", {'view': views})
+    def get_client_ip():
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+    ipno=get_client_ip()
+    for j in range(30):
+        User.objects.create_user(username=fake.user_name(), password=fake.password())
+    users=User.objects.all()
+    user_list=[]
+    for i in users:
+        user = User.objects.get(username=i.username)
+        user_list.append(user)
+    for i in range(0,30):
+        userdetails.objects.create(
+            name=fake.name(),
+            phonenumber=fake.phone_number(),
+            college=fake.name(),
+            email=fake.email(),
+            hobbies=fake.name(),
+            user=user_list[i]
+        )
+        '''
+    if request.user.is_authenticated:
+        views = Blog.objects.all()
+        return render(request, "home.html", {'view': views})
+    else:
+        return redirect("/login")
 
 
 def signuppage(request):
@@ -43,7 +53,7 @@ def signuppage(request):
 
 
 def loginuserpage(request):
-    return render(request, "login.html")
+    return render(request, "authenticate.html")
 
 
 def signup_user(request):
@@ -73,14 +83,14 @@ def loginuser(request):
     username = request.POST.get('username')
     Password = request.POST.get('password')
     print(username)
-    # check if user has entered correct credentials
+    # check if user has entered correct crede`ntials
     user = authenticate(username=username, password=Password)
     print(user)
     if user is not None:
         # A backend authenticated the credentials
         print("yess")
         login(request, user)
-        return redirect('/Dashboard')
+        return redirect('/')
     else:
         return HttpResponse("Login Failed!")
 
@@ -98,72 +108,31 @@ def blog_content_save(request):
 
 
 def ip_view(request, idip):
-    def get_client_ip():
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
+    previous_url = request.session.get('previous_url', 'No previous URL')
+    parsed_url = urlparse(previous_url)
+    blogobj = get_object_or_404(Blog, id=idip)
+    if request.user in blogobj.views.all():
+        pass
+    else:            
+        blogobj.views.add(request.user)
+        print("user add")
+        views = Blog.objects.all()
 
-    ipno = get_client_ip()
-
-    if ip.objects.filter(blogid=idip).exists():
-        obj = ip.objects.filter(blogid=idip)
-        if obj.filter(ipadd=ipno).exists():
-            pass
-        else:
-            ip.objects.create(ipadd=ipno, blogid=idip)
-            post = Blog.objects.get(pk=idip)
-            post.views.add(obj.get(ipadd=ipno))
-    else:
-        obj = ip.objects.filter(blogid=idip)
-        ip.objects.create(ipadd=ipno, blogid=idip)
-        post = Blog.objects.get(pk=idip)
-        post.views.add(obj.get(ipadd=ipno))
-
-    blogpost = Blog.objects.get(pk=idip)
-
-    post = likeip.objects.filter(blogid=idip)
-
-    flag = []
-    if post.filter(likedip=ipno).exists():
-        flag.append(True)
-    else:
-        flag.append(False)
-    flagcheck = flag[0]
-    return render(request, "blog.html", {'blogpost': blogpost, 'flag': flagcheck})
+    # total_followings=followers.objects.filter(user_follows=post.user)
+    return render(request, "blog.html",{'blogpost':blogobj})
 
 
-def like_view(request, pkid):
-    def get_client_ip():
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
-    ipno = get_client_ip()
-
-    if likeip.objects.filter(blogid=pkid).exists():
-        obj = likeip.objects.filter(blogid=pkid)
-        if obj.filter(likedip=ipno).exists():
-            pass
-        else:
-            likeip.objects.create(likedip=ipno, blogid=pkid)
-            post = Blog.objects.get(pk=pkid)
-            post.ipliked.add(obj.get(likedip=ipno))
-            post.userliked.add(request.user)
-    else:
-        obj = likeip.objects.filter(blogid=pkid)
-        print(obj)
-        likeip.objects.create(likedip=ipno, blogid=pkid)
-        post = Blog.objects.get(pk=pkid)
-        print(obj)
-        post.ipliked.add(obj.get(likedip=ipno))
-        post.userliked.add(request.user)
-
-    return redirect(f"/blog/{pkid}")
+def like_view(request,pkid):
+    # current_url = request.build_absolute_uri()
+    previous_url = request.session.get('previous_url', 'No previous URL')
+    parsed_url = urlparse(previous_url)
+    blogobj = get_object_or_404(Blog, id=pkid)
+    if request.user in blogobj.userliked.all():
+        pass
+    else:            
+        blogobj.userliked.add(request.user)
+        print("user add")
+    return redirect(f"{parsed_url.path}")
 
 
 def comment_view(request, blogid):
@@ -174,17 +143,13 @@ def comment_view(request, blogid):
 
 
 def dislike_view(request, blogid):
-    def get_client_ip():
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
-    ipno = get_client_ip()
-    obj = likeip.objects.filter(blogid=blogid)
-    obj.get(likedip=ipno).delete()
-    return redirect(f"/blog/{blogid}")
+    previous_url = request.session.get('previous_url', 'No previous URL')
+    parsed_url = urlparse(previous_url)
+    # print()
+    obj=get_object_or_404(Blog,id=blogid)
+    obj.userliked.remove(request.user)
+    return redirect(f"{parsed_url.path}")
+
 
 
 def view_profile(request, user):
@@ -195,12 +160,28 @@ def profile(request, user):
     # profile_details=userdetails.objects.filter(user=user)
     try:
         user = User.objects.get(username=user)
-        print(user)
+        totalblogs = Blog.objects.filter(user=user).count()
+        totalfollowers = followers.objects.filter(followed_user=user).count()
+        followings = followers.objects.filter(user_follows=user).count()
+        context = {
+            'username': user,
+            'totalfollowers': totalfollowers,
+            'totalblogs': totalblogs,
+            'followings': followings
+        }
+        profileuser = followers.objects.filter(followed_user=user)
+        followingusercheck = profileuser.filter(user_follows=request.user)
+
+        if followingusercheck.exists():
+            context["flag"] = 0
+        else:
+            context['flag'] = 1
+
     except User.DoesNotExist:
         # Handle the case where the user does not exist
-        return render(request, 'user_not_found.html', {'username': user})
+        return render(request, 'user_not_found.html')
 
-    return render(request, 'profile.html', {'user': user})
+    return render(request, 'profile.html', context=context)
 
 
 def search_view(request):
@@ -220,3 +201,38 @@ def search_view(request):
         'status': True,
         'payload': payload,
     })
+
+
+def follow(request, user):
+    def get_client_ip():
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+    ipno = get_client_ip()
+    userobj = User.objects.get(username=user)
+    followed_user = followers.objects.filter(followed_user=userobj)
+    checkfollower = followed_user.filter(followers_ip=ipno)
+
+    if checkfollower.exists():
+        return HttpResponse("Already followed")
+    else:
+        followers.objects.create(
+            followers_ip=ipno, user_follows=request.user, followed_user=userobj)
+
+        return HttpResponse("Done")
+
+
+def unfollow(request, user):
+    user = User.objects.get(username=user)
+    unfollowuser = followers.objects.filter(followed_user=user)
+    followinguser = unfollowuser.filter(user_follows=request.user)
+    followinguser.delete()
+    return HttpResponse("Done")
+
+
+def taged_user(request):
+    pass

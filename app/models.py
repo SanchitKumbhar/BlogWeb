@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
-
+# profile deatils
 class userdetails(models.Model):
     name = models.CharField(max_length=150)
     phonenumber = models.CharField(max_length=150)
@@ -11,30 +11,31 @@ class userdetails(models.Model):
     hobbies=models.CharField(max_length=150,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
 
-class ip(models.Model):
+# ip address for views
+class viewsip(models.Model):
     ipadd=models.CharField(max_length=128)
     blogid=models.CharField(max_length=128)
     def __str__(self):
         return self.ipadd
 
-class likeip(models.Model):
-    likedip=models.CharField(max_length=128)
-    blogid=models.CharField(max_length=128)
 
 
 class Blog(models.Model):
     blogtitle=models.CharField(max_length=150)
     blogcontent=models.TextField(max_length=2000)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    views=models.ManyToManyField(ip)
-    ipliked=models.ManyToManyField(likeip)
+    views=models.ManyToManyField(User,related_name="views")
     userliked = models.ManyToManyField(User,related_name="userliked")
+    tagged_user=models.ManyToManyField(userdetails)
 
 
     def total_views(self):
         return self.views.count()
     def total_likes(self):
-        return self.ipliked.count()
+        return self.userliked.count()
+
+            # def total_blogs(self):
+            #     return self.blogtitle.count()
     
 class comments(models.Model):
     comment=models.CharField(max_length=3000)
@@ -51,9 +52,5 @@ class followers(models.Model):
     user_follows=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_follows")
     followed_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="followed_user")
 
-
-
-
-
-
-
+    def total_follows(self):
+        return self.followed_user.count()
