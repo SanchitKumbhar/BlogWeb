@@ -111,25 +111,27 @@ def ip_view(request, idip):
     previous_url = request.session.get('previous_url', 'No previous URL')
     parsed_url = urlparse(previous_url)
     blogobj = get_object_or_404(Blog, id=idip)
+    userobj=User.objects.get(username=blogobj.user)
+    followuser = userdetails.objects.get(user=userobj.id)
     if request.user in blogobj.views.all():
         pass
-    else:            
+    else:
         blogobj.views.add(request.user)
         print("user add")
         views = Blog.objects.all()
+    return render(request, "blog.html", {'blogpost': blogobj,'follow': followuser})
 
     # total_followings=followers.objects.filter(user_follows=post.user)
-    return render(request, "blog.html",{'blogpost':blogobj})
 
 
-def like_view(request,pkid):
+def like_view(request, pkid):
     # current_url = request.build_absolute_uri()
     previous_url = request.session.get('previous_url', 'No previous URL')
     parsed_url = urlparse(previous_url)
     blogobj = get_object_or_404(Blog, id=pkid)
     if request.user in blogobj.userliked.all():
         pass
-    else:            
+    else:
         blogobj.userliked.add(request.user)
         print("user add")
     return redirect(f"{parsed_url.path}")
@@ -146,42 +148,41 @@ def dislike_view(request, blogid):
     previous_url = request.session.get('previous_url', 'No previous URL')
     parsed_url = urlparse(previous_url)
     # print()
-    obj=get_object_or_404(Blog,id=blogid)
+    obj = get_object_or_404(Blog, id=blogid)
     obj.userliked.remove(request.user)
     return redirect(f"{parsed_url.path}")
-
 
 
 def view_profile(request, user):
     return redirect(f"/profile/{user}")
 
 
-def profile(request, user):
-    # profile_details=userdetails.objects.filter(user=user)
-    try:
-        user = User.objects.get(username=user)
-        totalblogs = Blog.objects.filter(user=user).count()
-        totalfollowers = followers.objects.filter(followed_user=user).count()
-        followings = followers.objects.filter(user_follows=user).count()
-        context = {
-            'username': user,
-            'totalfollowers': totalfollowers,
-            'totalblogs': totalblogs,
-            'followings': followings
-        }
-        profileuser = followers.objects.filter(followed_user=user)
-        followingusercheck = profileuser.filter(user_follows=request.user)
+# def profile(request, user):
+#     # profile_details=userdetails.objects.filter(user=user)
+#     try:
+#         user = User.objects.get(username=user)
+#         totalblogs = Blog.objects.filter(user=user).count()
+#         totalfollowers = followers.objects.filter(followed_user=user).count()
+#         followings = followers.objects.filter(user_follows=user).count()
+#         context = {
+#             'username': user,
+#             'totalfollowers': totalfollowers,
+#             'totalblogs': totalblogs,
+#             'followings': followings
+#         }
+#         profileuser = followers.objects.filter(followed_user=user)
+#         followingusercheck = profileuser.filter(user_follows=request.user)
 
-        if followingusercheck.exists():
-            context["flag"] = 0
-        else:
-            context['flag'] = 1
+#         if followingusercheck.exists():
+#             context["flag"] = 0
+#         else:
+#             context['flag'] = 1
 
-    except User.DoesNotExist:
-        # Handle the case where the user does not exist
-        return render(request, 'user_not_found.html')
+#     except User.DoesNotExist:
+#         # Handle the case where the user does not exist
+#         return render(request, 'user_not_found.html')
 
-    return render(request, 'profile.html', context=context)
+#     return render(request, 'profile.html', context=context)
 
 
 def search_view(request):
@@ -204,34 +205,20 @@ def search_view(request):
 
 
 def follow(request, user):
-    def get_client_ip():
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
-
-    ipno = get_client_ip()
-    userobj = User.objects.get(username=user)
-    followed_user = followers.objects.filter(followed_user=userobj)
-    checkfollower = followed_user.filter(followers_ip=ipno)
-
-    if checkfollower.exists():
-        return HttpResponse("Already followed")
-    else:
-        followers.objects.create(
-            followers_ip=ipno, user_follows=request.user, followed_user=userobj)
-
-        return HttpResponse("Done")
+    previous_url = request.session.get('previous_url', 'No previous URL')
+    parsed_url = urlparse(previous_url)
+    userobj=User.objects.get(username=user)
+    followuser = userdetails.objects.get(user=userobj.id)
+    followuser.followers.add(request.user)
+    return redirect(f"{parsed_url.path}")
 
 
-def unfollow(request, user):
-    user = User.objects.get(username=user)
-    unfollowuser = followers.objects.filter(followed_user=user)
-    followinguser = unfollowuser.filter(user_follows=request.user)
-    followinguser.delete()
-    return HttpResponse("Done")
+# def unfollow(request, user):
+#     user = User.objects.get(username=user)
+#     unfollowuser = followers.objects.filter(followed_user=user)
+#     followinguser = unfollowuser.filter(user_follows=request.user)
+#     followinguser.delete()
+#     return HttpResponse("Done")
 
 
 def taged_user(request):

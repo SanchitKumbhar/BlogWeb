@@ -36,10 +36,10 @@ urlpatterns = [
     path("blog/comment/<int:blogid>",views.comment_view,name="comment"),
     path("blog/<int:blogid>",views.comment_view,name="comment"),
     path("view-profile/<str:user>/",views.view_profile,name="view-profile"),
-    path("profile/<str:user>/",views.profile,name="profile"),
+    # path("profile/<str:user>/",views.profile,name="profile"),
     path("search/",views.search_view,name="search"),
     path("follow/<str:user>",views.follow,name="follow"),
-    path("unfollow/<str:user>",views.unfollow,name="unfollow"),
+    # path("unfollow/<str:user>",views.unfollow,name="unfollow"),
     path("mention/<str:user>",views.taged_user,name="tagged-user"),
 
 ]

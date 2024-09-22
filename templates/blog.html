@@ -93,7 +93,12 @@
         {% endif %}
 
         <button type="button" class="btn btn-info">share</button>
-        <button type="button" class="btn btn-info">Follow</button>
+        {% if request.user in follow.userliked.all %}
+
+            <a href="/follow/{{blogpost.user}}"> <button type="button" class="btn btn-info">Follow</button></a>
+            {% else %}
+            <a href="/follow/{{blogpost.user}}"> <button type="button" class="btn btn-info">Unfollow</button></a>
+        {% endif %}
         <button type="button" class="btn btn-info" onclick="comment()">Comment</button>
     </article>
 

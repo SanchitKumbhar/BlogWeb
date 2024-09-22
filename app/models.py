@@ -10,6 +10,7 @@ class userdetails(models.Model):
     email = models.CharField(max_length=150)
     hobbies=models.CharField(max_length=150,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    followers=models.ManyToManyField(User,related_name="followers")    
 
 # ip address for views
 class viewsip(models.Model):
@@ -46,11 +47,3 @@ class comments(models.Model):
 class Search(models.Model):
     search=models.CharField(max_length=150)
     user=models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
-
-class followers(models.Model):
-    followers_ip=models.CharField(max_length=128)
-    user_follows=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_follows")
-    followed_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="followed_user")
-
-    def total_follows(self):
-        return self.followed_user.count()
