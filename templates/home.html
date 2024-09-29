@@ -67,19 +67,20 @@
     /*  */
 
     /* cards */
-    #like {
+    .like {
       color: black;
       border: none;
       background-color: white;
     }
 
-    #dislike {
+    .dislike {
       color: black;
       border: none;
       background-color: white;
-  
+
     }
-    .view button{
+
+    .view button {
       margin-left: 5px;
       border: none;
       border-radius: 2px;
@@ -90,6 +91,8 @@
 </head>
 
 <body>
+
+
   <!-- navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark " aria-label="Offcanvas navbar large">
     <div class="container-fluid">
@@ -117,10 +120,13 @@
               <a class="nav-link active" aria-current="page" href="#">Trending</a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="#">Settings</a>
+              <a class="nav-link active" aria-current="page" href="/edit-profile">change profile</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link active" aria-current="page" href="#">change password</a>
             </li>
 
-            </li>
+            
           </ul>
           <div class="d-flex mt-3 mt-lg-0" role="search">
             {% if user.is_authenticated %}
@@ -164,10 +170,12 @@
 
                     <p class="small text-muted mb-0">{{post.blogcontent}}.</p>
                     {% if request.user in post.userliked.all %}
-                    <a href="/dislike/{{post.id}}"><button id="like"><i class="fa-solid fa-heart"></i></button></a>
+                    <button onclick="asyncDisLike({{post.id}}, '{{ csrf_token }}',{{ forloop.counter }})"
+                      class="dislike-{{ forloop.counter }} dislike"><i class="fa-solid fa-heart"></i></button>
                     {% else %}
-                    <a href="/like/{{post.id}}"><button id="dislike"><i
-                          class="fa-regular fa-heart"></i></button></a>
+                    <button class="like-{{ forloop.counter }} like"
+                      onclick="asyncLike({{post.id}}, '{{ csrf_token }}',{{ forloop.counter }})"><i
+                        class="fa-regular fa-heart"></i></button>
                     {% endif %}
                     {{post.total_likes}}
                     <span class="view">
@@ -195,6 +203,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+  <script src="{% static "/assets/js/adminjs/async-home.js" %}"></script>
+
   <script>
 
 

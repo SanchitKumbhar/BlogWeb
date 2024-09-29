@@ -1,0 +1,8 @@
+Algorithm:
+
+nich: n types
+if the user is new
+	show randomly the nich
+else
+	based on search,likes,own posts
+	all the posts will be shown randomly and based on posting time

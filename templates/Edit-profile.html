@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+</head>
+
+<body>
+    <header>
+        <h1>Change Profile</h1>
+    </header>
+
+    <div class="personal-details">
+        <div class="profile-name">
+            Change profile name: <span id="name"></span> <br>
+            <input type="text" name="profile-name">
+            <span><button type="button" onclick="changeProfile('name')">Change Name</button></span>
+        </div>
+        <div class="">
+            Change College Name: <span id="college"></span> <br>
+            <input type="text" name="profile-name">
+            <span><button type="button" onclick="changeProfile('college')">Change College</button></span>
+        </div>
+        <div class="">
+            Change Phone Number:<span id="phone-number"></span> <br>
+            <input type="text" name="profile-name">
+            <span><button type="button" onclick="changeProfile('profile-name')">Change Phone Nummber</button></span>
+        </div>
+    </div>
+    <!-- <script src="{% static "/assets/js/adminjs/async-home.js" %}"></script> -->
+    <script>
+        function changeProfile(parameter) {
+            let name = document.getElementById('name');
+            let college = document.getElementById('college');
+            let phoneNumeber = document.getElementById('phone-number');
+            let jsondata;
+            fetch('get-profile')
+                .then(response => {
+                    if (!response.ok) {
+                        alert(`There was a response error`);
+                    }
+                    return response.json()
+                })
+                .then(data => {
+                    jsondata=JSON.stringify(data)
+                    profiledata=JSON.parse(jsondata);
+                    name.innerText=profiledata.name;
+                    // jsondata = data;
+                })
+                .catch(error => {
+                    // Handle any errors that occurred during the fetch
+                    console.error('Error:', error);
+                });
+
+        }
+    </script>
+</body>
+
+</html>

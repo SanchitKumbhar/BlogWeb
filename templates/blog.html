@@ -34,7 +34,7 @@
 
 <!doctype html>
 <html lang="en">
-
+    {% load static %}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,19 +99,14 @@
             {% else %}
             <a href="/follow/{{blogpost.user}}"> <button type="button" class="btn btn-info">Unfollow</button></a>
         {% endif %}
-        <button type="button" class="btn btn-info" onclick="comment()">Comment</button>
+        <button type="button" class="btn btn-info" onclick="comment({{blogpost.id}},'{{csrf_token}}')">Comment</button>
     </article>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        <script>
-            function comment(params) {
-               usercomment= prompt("Enter your coment: ");
-            }
-            
-        </script>
-</body>
+        <script src="{% static "/assets/js/adminjs/async-home.js" %}"></script>
+    </body>
 
 </html>

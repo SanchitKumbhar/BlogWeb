@@ -76,7 +76,7 @@ def personal_details_registered(request):
 
     userdetails(name=name, phonenumber=phonenumber, college=college,
                 email=email, user=request.user).save()
-    return redirect("/Dashboard")
+    return redirect("/")
 
 
 def loginuser(request):
@@ -111,7 +111,7 @@ def ip_view(request, idip):
     previous_url = request.session.get('previous_url', 'No previous URL')
     parsed_url = urlparse(previous_url)
     blogobj = get_object_or_404(Blog, id=idip)
-    userobj=User.objects.get(username=blogobj.user)
+    userobj = User.objects.get(username=blogobj.user)
     followuser = userdetails.objects.get(user=userobj.id)
     if request.user in blogobj.views.all():
         pass
@@ -119,38 +119,50 @@ def ip_view(request, idip):
         blogobj.views.add(request.user)
         print("user add")
         views = Blog.objects.all()
-    return render(request, "blog.html", {'blogpost': blogobj,'follow': followuser})
+    return render(request, "blog.html", {'blogpost': blogobj, 'follow': followuser})
 
     # total_followings=followers.objects.filter(user_follows=post.user)
 
 
-def like_view(request, pkid):
-    # current_url = request.build_absolute_uri()
-    previous_url = request.session.get('previous_url', 'No previous URL')
-    parsed_url = urlparse(previous_url)
-    blogobj = get_object_or_404(Blog, id=pkid)
-    if request.user in blogobj.userliked.all():
-        pass
-    else:
-        blogobj.userliked.add(request.user)
-        print("user add")
-    return redirect(f"{parsed_url.path}")
+def like_view(request):
+    if request.method == 'POST':
+        # Load the JSON data from the request body
+        data = json.loads(request.body)
+        blogid = data.get('blogid')
+        blogobj = get_object_or_404(Blog, id=blogid)
+        if request.user in blogobj.userliked.all():
+            pass
+        else:
+            blogobj.userliked.add(request.user)
+            print("user add")
+        print(data)
+        return JsonResponse({
+            'succ': 200
+        })
 
 
-def comment_view(request, blogid):
-    comment = request.POST.get("comment")
-    comments.objects.create(
-        comment=comment, blogid=blogid, usercomment=request.user)
-    return redirect(f"/blog/{blogid}")
+def comment_view(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        comment = data.get('text')
+        blogid = data.get('blogid')
+        comments.objects.create(
+            comment=comment, blogid=blogid, usercomment=request.user)
+        return JsonResponse({
+            'succ': 200
+        })
 
 
-def dislike_view(request, blogid):
-    previous_url = request.session.get('previous_url', 'No previous URL')
-    parsed_url = urlparse(previous_url)
-    # print()
-    obj = get_object_or_404(Blog, id=blogid)
-    obj.userliked.remove(request.user)
-    return redirect(f"{parsed_url.path}")
+def dislike_view(request):
+    if request.method == "POST":
+        # Load the JSON data from the request body
+        data = json.loads(request.body)
+        blogid = data.get('blogid')
+        obj = get_object_or_404(Blog, id=blogid)
+        obj.userliked.remove(request.user)
+        return JsonResponse({
+            'succ': 200
+        })
 
 
 def view_profile(request, user):
@@ -207,7 +219,7 @@ def search_view(request):
 def follow(request, user):
     previous_url = request.session.get('previous_url', 'No previous URL')
     parsed_url = urlparse(previous_url)
-    userobj=User.objects.get(username=user)
+    userobj = User.objects.get(username=user)
     followuser = userdetails.objects.get(user=userobj.id)
     followuser.followers.add(request.user)
     return redirect(f"{parsed_url.path}")
@@ -223,3 +235,21 @@ def follow(request, user):
 
 def taged_user(request):
     pass
+
+
+def EditProfile(request):
+    if request.method == 'GET':
+        userinstance=userdetails.objects.get(user=request.user) 
+        profile={
+            'name' : userinstance.name,
+            'college' : userinstance.college,
+            'phonenumber' : userinstance.phonenumber
+        }
+        return JsonResponse(profile)
+    elif request.method == 'POST':
+        return JsonResponse({
+            'succ': 200
+        })
+
+def EditProfilePage(request):
+    return render(request,'Edit-profile.html')

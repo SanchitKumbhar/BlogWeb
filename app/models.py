@@ -26,7 +26,7 @@ class Blog(models.Model):
     blogcontent=models.TextField(max_length=2000)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     views=models.ManyToManyField(User,related_name="views")
-    userliked = models.ManyToManyField(User,related_name="userliked")
+    userliked = models.ManyToManyField(User,related_name="userliked")       
     tagged_user=models.ManyToManyField(userdetails)
 
 
