@@ -16,28 +16,63 @@
     <div class="personal-details">
         <div class="profile-name">
             Change profile name: <span id="name"></span> <br>
-            <input type="text" name="profile-name">
-            <span><button type="button" onclick="changeProfile('name')">Change Name</button></span>
+            <input type="text" name="profile-name" id="changename">
+            <span><button type="button" onclick="changeProfile('name','{{ csrf_token }}')">Change Name</button></span>
         </div>
         <div class="">
             Change College Name: <span id="college"></span> <br>
-            <input type="text" name="profile-name">
-            <span><button type="button" onclick="changeProfile('college')">Change College</button></span>
+            <input type="text" name="profile-college" id="changecollege">
+            <span><button type="button" onclick="changeProfile('college','{{ csrf_token }}')">Change
+                    College</button></span>
         </div>
         <div class="">
             Change Phone Number:<span id="phone-number"></span> <br>
-            <input type="text" name="profile-name">
-            <span><button type="button" onclick="changeProfile('profile-name')">Change Phone Nummber</button></span>
+            <input type="text" name="profile-phn" id="changephno">
+            <span><button type="button" onclick="changeProfile('phonenumber','{{ csrf_token }}')">Change Phone
+                    Nummber</button></span>
         </div>
     </div>
     <!-- <script src="{% static "/assets/js/adminjs/async-home.js" %}"></script> -->
     <script>
-        function changeProfile(parameter) {
-            let name = document.getElementById('name');
-            let college = document.getElementById('college');
-            let phoneNumeber = document.getElementById('phone-number');
-            let jsondata;
-            fetch('get-profile')
+
+        let name = document.getElementById('name');
+        let college = document.getElementById('college');
+        let phoneNumeber = document.getElementById('phone-number');
+        let jsondata;
+
+        fetch('get-profile')
+            .then(response => {
+                if (!response.ok) {
+                    alert(`There was a response error`);
+                }
+                return response.json()
+            })
+            .then(data => {
+                jsondata = JSON.stringify(data)
+                profiledata = JSON.parse(jsondata);
+                name.innerText = profiledata.name;
+                college.innerText = profiledata.college;
+                phoneNumeber.innerText = profiledata.phonenumber;
+                // jsondata = data;
+            })
+            .catch(error => {
+                // Handle any errors that occurred during the fetch
+                console.error('Error:', error);
+            });
+        let changename = document.getElementById('changename');
+        let changecollege = document.getElementById('changecollege');
+        let changephno = document.getElementById('changephno');
+
+
+        let asyncChange = (data, CSRFToken) => {
+            fetch('post-profile', {
+                'method': 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'X-CSRFToken': CSRFToken // Include the CSRF token
+                },
+                body: JSON.stringify(data)
+            })
                 .then(response => {
                     if (!response.ok) {
                         alert(`There was a response error`);
@@ -45,17 +80,39 @@
                     return response.json()
                 })
                 .then(data => {
-                    jsondata=JSON.stringify(data)
-                    profiledata=JSON.parse(jsondata);
-                    name.innerText=profiledata.name;
-                    // jsondata = data;
+                    console.log(data);
                 })
                 .catch(error => {
                     // Handle any errors that occurred during the fetch
                     console.error('Error:', error);
                 });
+        };
+
+        function changeProfile(parameter, token) {
+            if (parameter === 'name') {
+                let data = {};
+                data['name'] = changename.value;
+                data['flag'] = 'changename';
+                asyncChange(data, token);
+                name.innerText = changename.value;
+            }
+            else if (parameter === 'college') {
+                let data = {};
+                data['college'] = changecollege.value;
+                data['flag'] = 'changecollege';
+                asyncChange(data, token);
+                college.innerText = changecollege.value;
+            } else {
+                let data = {};
+                data['phonenumber'] = changephno.value;
+                data['flag'] = 'changephonenumber';
+                asyncChange(data, token);
+                phoneNumeber.innerText = changephno.value;
+
+            }
 
         }
+
     </script>
 </body>
 

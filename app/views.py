@@ -25,7 +25,8 @@ def index(request):
         return ip
     ipno=get_client_ip()
     for j in range(30):
-        User.objects.create_user(username=fake.user_name(), password=fake.password())
+        User.objects.create_user(
+            username=fake.user_name(), password=fake.password())
     users=User.objects.all()
     user_list=[]
     for i in users:
@@ -239,17 +240,42 @@ def taged_user(request):
 
 def EditProfile(request):
     if request.method == 'GET':
-        userinstance=userdetails.objects.get(user=request.user) 
-        profile={
-            'name' : userinstance.name,
-            'college' : userinstance.college,
-            'phonenumber' : userinstance.phonenumber
+        userinstance = userdetails.objects.get(user=request.user)
+        profile = {
+            'name': userinstance.name,
+            'college': userinstance.college,
+            'phonenumber': userinstance.phonenumber
         }
         return JsonResponse(profile)
     elif request.method == 'POST':
-        return JsonResponse({
-            'succ': 200
-        })
+        data = json.loads(request.body)
+        flag = data.get('flag')
+        print(flag)
+        if flag == 'changename':
+            name = data.get('name')
+            userinstance = userdetails.objects.get(user=request.user)
+            userinstance.name = name
+            userinstance.save()
+            return JsonResponse({
+                'succ': 200
+            })
+        elif flag == 'changecollege':
+            college = data.get('college')
+            userinstance = userdetails.objects.get(user=request.user)
+            userinstance.college = college
+            userinstance.save()
+            return JsonResponse({
+                'succ': 200
+            })
+        else:
+            phonenumber = data.get('phonenumber')
+            userinstance = userdetails.objects.get(user=request.user)
+            userinstance.phonenumber = phonenumber
+            userinstance.save()
+            return JsonResponse({
+                'succ': 200
+            })
+
 
 def EditProfilePage(request):
-    return render(request,'Edit-profile.html')
+    return render(request, 'Edit-profile.html')

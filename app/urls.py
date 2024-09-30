@@ -42,6 +42,7 @@ urlpatterns = [
     # path("unfollow/<str:user>",views.unfollow,name="unfollow"),
     path("mention/<str:user>",views.taged_user,name="tagged-user"),
     path('get-profile',views.EditProfile,name='get-profile'),
+    path('post-profile',views.EditProfile,name='post-profile'),
     path('edit-profile',views.EditProfilePage,name='edit-profile'),
 
 ]
